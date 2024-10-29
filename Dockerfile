@@ -14,6 +14,7 @@ WORKDIR /var/www/html/vue
 ADD . /var/www/html/vue
 
 # 利用 pip 安装依赖
+RUN npm config set registry https://registry.npmmirror.com/
 RUN npm install
 
 # Windows环境下编写的start.sh每行命令结尾有多余的\r字符，需移除。
