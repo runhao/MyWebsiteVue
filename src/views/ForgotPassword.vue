@@ -23,7 +23,7 @@ export default {
 		const handleForgotPassword = async () => {
 			if (email.value) {
 				// console.log(email.value)
-				const res = await ctx.$axios.post('/api/v1/auth/forgotpassword', {email: email.value})
+				const res = await ctx.$axios.post('https://shiyan520.cn/api/v1/auth/forgotpassword', {email: email.value})
 				console.log(res.data)
 			}
 		}

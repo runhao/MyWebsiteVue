@@ -80,7 +80,7 @@ export default {
       ctx.$refs[formName].validate((valid: boolean) => {
         if (valid) {
           // alert("submit!");
-          ctx.$axios.post("/api/v1/auth/register", props.registerUser).then((res:any) =>{
+          ctx.$axios.post("https://shiyan520.cn/api/v1/auth/register", props.registerUser).then((res:any) =>{
 						// 注册成功
 						ctx.$message({
 							message: "注册成功",
