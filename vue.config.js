@@ -7,7 +7,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': { // 只要是以 '/ajax' 开头的ajax请求都会自动加上 target 属性值
-        target: 'https://shiyan520.cn',
+        target: 'https://imissu.herokuapp.com',
         changeOrigin: true
       }
     }
