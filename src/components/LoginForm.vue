@@ -44,7 +44,7 @@ export default {
       ctx.$refs[formName].validate((valid: boolean) => {
         if (valid) {
           // alert('submit!');
-					ctx.$axios.post("https://shiyan520.cn/api/v1/auth/login", props.loginUser).then((res:any) =>{
+					ctx.$axios.post("/api/v1/auth/login", props.loginUser).then((res:any) =>{
 						console.log(res.data)
 						// 登录成功
 						ctx.$message({
