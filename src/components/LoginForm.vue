@@ -43,12 +43,19 @@ export default {
       // console.log(ctx)
       ctx.$refs[formName].validate((valid: boolean) => {
         if (valid) {
-          // alert('submit!');
 					ctx.$axios.post("/api/v1/auth/login", props.loginUser).then((res:any) =>{
-						console.log(res.data)
+            let isSuccess = getSuccessState(res.data)
+            if (!isSuccess){
+              // 登录失败
+              ctx.$message({
+                message: `${res.data.msg}`,
+                type: "error"
+              })
+              return false
+            }
 						// 登录成功
 						ctx.$message({
-							message: "登录成功",
+							message: `${res.data.msg}`,
 							type: "success"
 						})
 
@@ -56,7 +63,6 @@ export default {
 						router.push('/')
 					})
         } else {
-          console.log('error submit!!');
           return false;
         }
       });
@@ -66,6 +72,10 @@ export default {
 		const handleForgot = () => {
 			router.push('/forgotpassword')
 		}
+
+    const getSuccessState = (data:any) => {
+      return !!data.success;
+    }
 
 		return { handleLogin, handleForgot }
 	},

@@ -81,9 +81,18 @@ export default {
         if (valid) {
           // alert("submit!");
           ctx.$axios.post("/api/v1/auth/register", props.registerUser).then((res:any) =>{
+            let isSuccess = getSuccessState(res.data)
+            if (!isSuccess){
+              // 登录失败
+              ctx.$message({
+                message: `${res.data.msg}`,
+                type: "error"
+              })
+              return false
+            }
 						// 注册成功
 						ctx.$message({
-							message: "注册成功",
+							message: `${res.data.msg}`,
 							type: "success"
 						})
 
@@ -91,12 +100,14 @@ export default {
 						router.push('/')
 					})
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
     };
 
+    const getSuccessState = (data:any) => {
+      return !!data.success;
+    }
 
     return { handleRegister };
   },
