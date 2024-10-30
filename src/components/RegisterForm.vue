@@ -32,13 +32,6 @@
         placeholder="Enter Password2..."
       ></el-input>
     </el-form-item>
-    <el-form-item label="选择身份">
-      <el-select v-model="registerUser.role" placeholder="请选择身份...">
-        <el-option label="管理员" value="admin"></el-option>
-        <el-option label="用户" value="user"></el-option>
-        <el-option label="游客" value="visitor"></el-option>
-      </el-select>
-    </el-form-item>
     <el-form-item>
       <el-button
         @click="handleRegister('registerForm')"
@@ -83,7 +76,6 @@ export default {
           ctx.$axios.post("/api/v1/auth/register", props.registerUser).then((res:any) =>{
             let isSuccess = getSuccessState(res.data)
             if (!isSuccess){
-              // 登录失败
               ctx.$message({
                 message: `${res.data.msg}`,
                 type: "error"
