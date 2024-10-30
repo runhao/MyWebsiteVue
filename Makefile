@@ -20,7 +20,10 @@ build:
 	docker buildx inspect --bootstrap
 	docker buildx build --platform linux/arm64 -t $(FULL_IMAGE_NAME) . --load || { echo "Build failed"; exit 1; }
 
-
+# Push the Docker image to the registry
+.PHONY: push
+push:
+	docker push $(FULL_IMAGE_NAME) || { echo "Push failed"; exit 1; }
 
 # Clean up the local Docker images
 .PHONY: clean

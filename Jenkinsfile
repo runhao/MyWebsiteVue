@@ -19,6 +19,13 @@ pipeline {
             }
         }
 
+        stage('Push Docker Image') {
+            steps {
+                sh "make push"
+            }
+        }
+
+
         stage('Clean Up') {
             steps {
                 sh "make clean"
