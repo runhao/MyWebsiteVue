@@ -9,7 +9,8 @@ module.exports = {
     proxy: {
       '/api': { // 只要是以 '/ajax' 开头的ajax请求都会自动加上 target 属性值
         target: 'https://shiyan520.cn',
-        changeOrigin: true
+        changeOrigin: true,
+        allowedHosts: ['naodongzhizao.com']
       }
     }
   }
