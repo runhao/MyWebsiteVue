@@ -1,34 +1,32 @@
 <template>
-  <div id="login-register-content">
-    <div class="container" :class="{'sign-up-mode':signUpMode}">
-      <!-- form表单容器 -->
-      <div class="forms-container">
-        <div class="signin-signup">
-          <!-- 登录 -->
-          <LoginForm :loginUser="loginUser" :rules="rules"/>
-          <!-- 注册 -->
-          <RegisterForm :registerUser="registerUser" :registerRules="registerRules"/>
+  <div class="container" :class="{'sign-up-mode':signUpMode}">
+    <!-- form表单容器 -->
+    <div class="forms-container">
+      <div class="signin-signup">
+        <!-- 登录 -->
+        <LoginForm :loginUser="loginUser" :rules="rules"/>
+        <!-- 注册 -->
+        <RegisterForm :registerUser="registerUser" :registerRules="registerRules"/>
 
-        </div>
       </div>
-      <!-- 左右切换动画 -->
-      <div class="panels-container">
-        <div class="panel left-panel">
-          <div class="content">
-            <h3>扛得住艰难，才能配得上梦想!</h3>
-            <p>何以解忧</p>
-            <button @click="signUpMode = !signUpMode" class="btn transparent">注册</button>
-          </div>
-          <img src="@/assets/img/login.png" class="image" alt="">
+    </div>
+    <!-- 左右切换动画 -->
+    <div class="panels-container">
+      <div class="panel left-panel">
+        <div class="content">
+          <h3>扛得住艰难，才能配得上梦想!</h3>
+          <p>何以解忧</p>
+          <button @click="signUpMode = !signUpMode" class="btn transparent">注册</button>
         </div>
-        <div class="panel right-panel">
-          <div class="content">
-            <h3>学习是为了有更多的选择, 让生活变得更美好!</h3>
-            <p>何以解忧</p>
-            <button @click="signUpMode = !signUpMode" class="btn transparent">登录</button>
-          </div>
-          <img src="@/assets/img/register.png" class="image" alt="">
+        <img src="@/assets/img/login.png" class="image" alt="">
+      </div>
+      <div class="panel right-panel">
+        <div class="content">
+          <h3>学习是为了有更多的选择, 让生活变得更美好!</h3>
+          <p>何以解忧</p>
+          <button @click="signUpMode = !signUpMode" class="btn transparent">登录</button>
         </div>
+        <img src="@/assets/img/register.png" class="image" alt="">
       </div>
     </div>
   </div>
@@ -58,7 +56,8 @@ export default {
 </script>
 
 <style scoped>
-#login-register-content{
+
+.container {
   position: relative;
   width: 100%;
   background-color: #fff;

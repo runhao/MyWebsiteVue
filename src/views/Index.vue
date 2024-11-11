@@ -3,8 +3,8 @@
     <dialog open>
       <p>欢迎燕燕大美女进入!</p>
       <form method="dialog">
-        <button @click="clickWellcome">快来欢迎我！</button>
-        <button @click="clickLogin">进入门户页面</button>
+        <button type="button" @click="clickWellcome">快来欢迎我！</button>
+        <button type="button" @click="clickLogin">进入门户页面</button>
       </form>
     </dialog>
   </div>

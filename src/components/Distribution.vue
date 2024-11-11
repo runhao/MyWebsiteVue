@@ -13,14 +13,6 @@
   </div>
 </template>
 
-<script lang="ts">
-
-export default {
-  setup() {
-  },
-}
-</script>
-
 <style scoped>
 .website-info {
   text-align: center;
