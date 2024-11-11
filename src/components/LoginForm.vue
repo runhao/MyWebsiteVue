@@ -43,7 +43,7 @@ export default {
       // console.log(ctx)
       ctx.$refs[formName].validate((valid: boolean) => {
         if (valid) {
-					ctx.$axios.post("/api/v1/auth/login", props.loginUser).then((res:any) =>{
+					ctx.$axios.post("/api/user/login", props.loginUser).then((res:any) =>{
             let isSuccess = getSuccessState(res.data)
             if (!isSuccess){
               // 登录失败

@@ -1,5 +1,6 @@
 // 项目配置文件
 module.exports = {
+  assetsDir: 'static',
   // 关闭eslint , 默认是true
   // lintOnSave: false
 

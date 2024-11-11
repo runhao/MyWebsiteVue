@@ -73,7 +73,7 @@ export default {
       ctx.$refs[formName].validate((valid: boolean) => {
         if (valid) {
           // alert("submit!");
-          ctx.$axios.post("/api/v1/auth/register", props.registerUser).then((res:any) =>{
+          ctx.$axios.post("/api/user/register", props.registerUser).then((res:any) =>{
             let isSuccess = getSuccessState(res.data)
             if (!isSuccess){
               ctx.$message({
