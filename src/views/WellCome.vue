@@ -4,9 +4,7 @@
            autoplay="autoplay"></audio>
     <h1>I Love 石燕</h1>
     <div id="differTime">
-      <span>在一起的</span><span>{{ days }}</span>天<span>{{ hour }}</span>时<span>{{ minute }}</span>分<span>{{
-        second
-      }}</span><span>秒！</span>
+      <span>在一起的</span><span>{{ days }}</span>天<span>{{ hours }}</span>时<span>{{ minutes }}</span>分<span>{{ seconds }}</span>秒！
     </div>
     <img id="girlFriend" src="@/assets/img/photo.jpg" alt="Jpg">
   </div>
@@ -14,40 +12,48 @@
 </template>
 
 <script>
+import { reactive } from 'vue';
 import Distribution from "@/components/Distribution.vue"
 
 export default {
   name: "WellCome",
-  components: {Distribution},
+  components: { Distribution },
   setup() {
-    window.onload = function () {
-      const home = document.getElementById("differTime");
-      let dd = Number(home.children[1].innerHTML);
-      let hh = Number(home.children[2].innerHTML);
-      let mm = Number(home.children[3].innerHTML);
-      let ss = Number(home.children[4].innerHTML);
-      setInterval(changeDate, 1000);
+    const targetDate = new Date("2024-07-06T16:00:00").getTime();
 
-      function fix(num, length) {
-        return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
-      }
+    const state = reactive({
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0
+    });
 
-      function changeDate() {
-        document.getElementById("differTime").innerText = "在一起的" + fix(dd, 2) + "天" + fix(hh, 2) + "时" + fix(mm, 2) + "分" + fix(ss, 2) + "秒!";
-        ss++;
-        if (ss === 60) {
-          ss = 0;
-          mm++;
-          if (mm === 60) {
-            mm = 0;
-            hh++;
-            if (hh === 24) {
-              hh = 0;
-            }
-          }
-        }
+    function calculateTimeDifference() {
+      const now = new Date().getTime();
+      const difference = now -targetDate;
+
+      if (difference > 0) {
+        state.days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        state.hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        state.minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        state.seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      } else {
+        // 如果时间已经过去
+        state.days = 0;
+        state.hours = 0;
+        state.minutes = 0;
+        state.seconds = 0;
       }
-    };
+    }
+
+    setInterval(() => {
+      calculateTimeDifference();
+    }, 1000);
+
+    // 初始化时间差
+    calculateTimeDifference();
+
+    return state;
   },
 }
 </script>
@@ -78,4 +84,3 @@ export default {
   max-width: 60%;
 }
 </style>
-
