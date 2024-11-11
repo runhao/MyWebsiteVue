@@ -1,10 +1,10 @@
 <template>
   <div id="content">
-    <audio id="audioMp3" src="/statics/beautiful_life.mp3" loop="loop" controls="controls"
-           autoplay="autoplay"></audio>
     <h1>I Love 石燕</h1>
     <div id="differTime">
-      <span>在一起的</span><span>{{ days }}</span>天<span>{{ hours }}</span>时<span>{{ minutes }}</span>分<span>{{ seconds }}</span>秒！
+      <span>在一起的</span><span>{{ days }}</span>天<span>{{ hours }}</span>时<span>{{ minutes }}</span>分<span>{{
+        seconds
+      }}</span>秒！
     </div>
     <img id="girlFriend" src="@/assets/img/photo.jpg" alt="Jpg">
   </div>
@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
+import {reactive} from 'vue';
 import Distribution from "@/components/Distribution.vue"
 
 export default {
   name: "WellCome",
-  components: { Distribution },
+  components: {Distribution},
   setup() {
     const targetDate = new Date("2024-07-06T16:00:00").getTime();
 
@@ -30,7 +30,7 @@ export default {
 
     function calculateTimeDifference() {
       const now = new Date().getTime();
-      const difference = now -targetDate;
+      const difference = now - targetDate;
 
       if (difference > 0) {
         state.days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -65,8 +65,8 @@ export default {
 }
 
 #content {
-    text-align: center;
-    min-height: 300px;
+  text-align: center;
+  min-height: 300px;
 }
 
 #differTime {
