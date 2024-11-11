@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div id="content" :class="{'sign-up-mode':signUpMode}">
+  <div id="login-register-content">
+    <div class="container" :class="{'sign-up-mode':signUpMode}">
       <!-- form表单容器 -->
       <div class="forms-container">
         <div class="signin-signup">
@@ -14,25 +14,25 @@
       <!-- 左右切换动画 -->
       <div class="panels-container">
         <div class="panel left-panel">
-          <div class="panel-content">
-            <h3>学习是为了有更多的选择, 让生活变得更美好!</h3>
+          <div class="content">
+            <h3>扛得住艰难，才能配得上梦想!</h3>
             <p>何以解忧</p>
             <button @click="signUpMode = !signUpMode" class="btn transparent">注册</button>
           </div>
-          <img src="@/assets/img/login.svg" class="image" alt="">
+          <img src="@/assets/img/login.png" class="image" alt="">
         </div>
         <div class="panel right-panel">
-          <div class="panel-content">
+          <div class="content">
             <h3>学习是为了有更多的选择, 让生活变得更美好!</h3>
             <p>何以解忧</p>
             <button @click="signUpMode = !signUpMode" class="btn transparent">登录</button>
           </div>
-          <img src="@/assets/img/register.svg" class="image" alt="">
+          <img src="@/assets/img/register.png" class="image" alt="">
         </div>
       </div>
     </div>
-    <Distribution id="footer"/>
   </div>
+  <Distribution id="footer"/>
 </template>
 
 <script lang="ts">
@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style scoped>
-#content {
+#login-register-content{
   position: relative;
   width: 100%;
   background-color: #fff;
@@ -190,7 +190,7 @@ export default {
   padding: 3rem 12% 2rem 17%;
 }
 
-.panel .panel-content {
+.panel .content {
   color: #fff;
   transition: transform 0.9s ease-in-out;
   transition-delay: 0.6s;
@@ -218,7 +218,7 @@ export default {
 }
 
 .right-panel .image,
-.right-panel .panel-content {
+.right-panel .content {
   transform: translateX(800px);
 }
 
@@ -230,7 +230,7 @@ export default {
 }
 
 .container.sign-up-mode .left-panel .image,
-.container.sign-up-mode .left-panel .panel-content {
+.container.sign-up-mode .left-panel .content {
   transform: translateX(-800px);
 }
 
@@ -249,7 +249,7 @@ export default {
 }
 
 .container.sign-up-mode .right-panel .image,
-.container.sign-up-mode .right-panel .panel-content {
+.container.sign-up-mode .right-panel .content {
   transform: translateX(0%);
 }
 
@@ -306,7 +306,7 @@ export default {
     transition-delay: 0.6s;
   }
 
-  .panel .panel-content {
+  .panel .content {
     padding-right: 15%;
     transition: transform 0.9s ease-in-out;
     transition-delay: 0.8s;
@@ -345,17 +345,17 @@ export default {
   }
 
   .container.sign-up-mode .left-panel .image,
-  .container.sign-up-mode .left-panel .panel-content {
+  .container.sign-up-mode .left-panel .content {
     transform: translateY(-300px);
   }
 
   .container.sign-up-mode .right-panel .image,
-  .container.sign-up-mode .right-panel .panel-content {
+  .container.sign-up-mode .right-panel .content {
     transform: translateY(0px);
   }
 
   .right-panel .image,
-  .right-panel .panel-content {
+  .right-panel .content {
     transform: translateY(300px);
   }
 
@@ -374,7 +374,7 @@ export default {
     display: none;
   }
 
-  .panel .panel-content {
+  .panel .content {
     padding: 0.5rem 1rem;
   }
 
