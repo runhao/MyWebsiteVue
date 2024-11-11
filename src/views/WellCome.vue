@@ -1,6 +1,6 @@
 <template>
   <div id="content">
-    <audio id="audioMp3" src="/static/beautiful_life.mp3" loop="loop" controls="controls"
+    <audio id="audioMp3" src="/statics/beautiful_life.mp3" loop="loop" controls="controls"
            autoplay="autoplay"></audio>
     <h1>I Love 石燕</h1>
     <div id="differTime">
