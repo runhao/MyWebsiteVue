@@ -60,7 +60,7 @@ export default {
 						})
 
 						// 路由跳转 
-						router.push('/')
+						router.push('/index')
 					})
         } else {
           return false;

@@ -1,66 +1,74 @@
 <template>
-  <div class="container" :class="{'sign-up-mode':signUpMode}">
-    <!-- form表单容器 -->
-    <div class="forms-container">
-      <div class="signin-signup">
-        <!-- 登录 -->
-        <LoginForm :loginUser="loginUser" :rules="rules"/>
-        <!-- 注册 -->
-        <RegisterForm :registerUser="registerUser" :registerRules="registerRules"/>
-        
-      </div>
-    </div>
-    <!-- 左右切换动画 -->
-    <div class="panels-container">
-      <div class="panel left-panel">
-        <div class="content">
-          <h3>学习是为了有更多的选择, 让生活变得更美好!</h3>
-          <p>何以解忧</p>
-          <button @click="signUpMode = !signUpMode" class="btn transparent">注册</button>
-        </div>
-        <img src="@/assets/img/login.svg" class="image" alt="">
-      </div>
-      <div class="panel right-panel">
-        <div class="content">
-          <h3>学习是为了有更多的选择, 让生活变得更美好!</h3>
-          <p>何以解忧</p>
-          <button @click="signUpMode = !signUpMode" class="btn transparent">登录</button>
-        </div>
-        <img src="@/assets/img/register.svg" class="image" alt="">
+  <div>
+    <div id="content" :class="{'sign-up-mode':signUpMode}">
+      <!-- form表单容器 -->
+      <div class="forms-container">
+        <div class="signin-signup">
+          <!-- 登录 -->
+          <LoginForm :loginUser="loginUser" :rules="rules"/>
+          <!-- 注册 -->
+          <RegisterForm :registerUser="registerUser" :registerRules="registerRules"/>
 
+        </div>
+      </div>
+      <!-- 左右切换动画 -->
+      <div class="panels-container">
+        <div class="panel left-panel">
+          <div class="content">
+            <h3>学习是为了有更多的选择, 让生活变得更美好!</h3>
+            <p>何以解忧</p>
+            <button @click="signUpMode = !signUpMode" class="btn transparent">注册</button>
+          </div>
+          <img src="@/assets/img/login.svg" class="image" alt="">
+        </div>
+        <div class="panel right-panel">
+          <div class="content">
+            <h3>学习是为了有更多的选择, 让生活变得更美好!</h3>
+            <p>何以解忧</p>
+            <button @click="signUpMode = !signUpMode" class="btn transparent">登录</button>
+          </div>
+          <img src="@/assets/img/register.svg" class="image" alt="">
+        </div>
       </div>
     </div>
+    <Distribution id="footer"/>
   </div>
 </template>
 
 <script lang="ts">
 
 // getCurrentInstance 可以获取当前实例
-import { ref, getCurrentInstance } from 'vue'
-import { loginUser, rules } from '@/utils/loginValidators'
-import { registerUser, registerRules } from '@/utils/registerValidators'
+import {ref, getCurrentInstance} from 'vue'
+import {loginUser, rules} from '@/utils/loginValidators'
+import {registerUser, registerRules} from '@/utils/registerValidators'
 import LoginForm from "@/components/LoginForm.vue"
 import RegisterForm from "@/components/RegisterForm.vue"
+import Distribution from "@/components/Distribution.vue"
 
 export default {
   name: "LoginRegister",
-  components:{ LoginForm, RegisterForm },
+  components: {LoginForm, RegisterForm, Distribution},
   setup() {
 
     const signUpMode = ref<boolean>(false)
 
-    return { signUpMode, loginUser, rules, registerUser, registerRules }
+    return {signUpMode, loginUser, rules, registerUser, registerRules}
   },
 }
 </script>
 
 <style scoped>
-.container {
+#content {
   position: relative;
   width: 100%;
   background-color: #fff;
   min-height: 100vh;
   overflow: hidden;
+}
+
+#footer {
+  background-color: #eee;
+  color: #555;
 }
 
 .forms-container {
@@ -132,6 +140,7 @@ export default {
 .btn:hover {
   background-color: #4d84e2;
 }
+
 .panels-container {
   position: absolute;
   height: 100%;
@@ -257,6 +266,7 @@ export default {
     min-height: 800px;
     height: 100vh;
   }
+
   .signin-signup {
     width: 100%;
     top: 95%;
@@ -363,9 +373,11 @@ export default {
   .image {
     display: none;
   }
+
   .panel .content {
     padding: 0.5rem 1rem;
   }
+
   .container {
     padding: 1.5rem;
   }
@@ -382,7 +394,7 @@ export default {
 }
 
 /* 控制显示 */
-form{
+form {
   padding: 0rem 5rem;
   transition: all 0.2s 0.7s;
   overflow: hidden;
