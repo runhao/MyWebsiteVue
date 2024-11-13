@@ -1,4 +1,5 @@
 #!/bin/bash
 
-npm run serve
+npm run build
+http-server ./dist -p 8068
 tail -f /dev/null
