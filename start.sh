@@ -1,5 +1,5 @@
 #!/bin/bash
 
 npm run build
-http-server ./dist -p 8068
+http-server ./dist -p 8069
 tail -f /dev/null
