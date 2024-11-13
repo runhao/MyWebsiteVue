@@ -13,6 +13,8 @@ WORKDIR /var/www/html/vue
 # 将当前目录文件加入到容器工作目录中（. 表示当前宿主机目录）
 ADD . /var/www/html/vue
 
+COPY nginx.conf /usr/local/nginx/conf/nginx.conf
+
 # 利用 pip 安装依赖
 RUN npm config set registry https://registry.npmmirror.com/
 RUN npm install
