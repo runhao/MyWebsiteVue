@@ -34,27 +34,27 @@ export default {
   },
   setup(props: any) {
     // @ts-ignore
-    const {ctx} = getCurrentInstance()
+    const {proxy} = getCurrentInstance()
     const router = useRouter()
 
     // 触发登录方法
     const handleLogin = (formName: string) => {
       // console.log(formName)
-      // console.log(ctx)
-      ctx.$refs[formName].validate((valid: boolean) => {
+      // console.log(proxy)
+      proxy.$refs[formName].validate((valid: boolean) => {
         if (valid) {
-          ctx.$axios.post("/api/user/login", props.loginUser).then((res: any) => {
+          proxy.$axios.post("/api/user/login", props.loginUser).then((res: any) => {
             let isSuccess = getSuccessState(res.data)
             if (!isSuccess) {
               // 登录失败
-              ctx.$message({
+              proxy.$message({
                 message: `${res.data.msg}`,
                 type: "error"
               })
               return false
             }
             // 登录成功
-            ctx.$message({
+            proxy.$message({
               message: `${res.data.msg}`,
               type: "success"
             })

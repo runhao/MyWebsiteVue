@@ -62,28 +62,28 @@ export default {
   },
   setup(props:any) {
     // @ts-ignore
-    const { ctx } = getCurrentInstance();
+    const { proxy } = getCurrentInstance();
 
 		const router = useRouter()
 
     // 触发注册方法
     const handleRegister = (formName: string) => {
       console.log(formName)
-      // console.log(ctx)
-      ctx.$refs[formName].validate((valid: boolean) => {
+      // console.log(proxy)
+      proxy.$refs[formName].validate((valid: boolean) => {
         if (valid) {
           // alert("submit!");
-          ctx.$axios.post("/api/user/register", props.registerUser).then((res:any) =>{
+          proxy.$axios.post("/api/user/register", props.registerUser).then((res:any) =>{
             let isSuccess = getSuccessState(res.data)
             if (!isSuccess){
-              ctx.$message({
+              proxy.$message({
                 message: `${res.data.msg}`,
                 type: "error"
               })
               return false
             }
 						// 注册成功
-						ctx.$message({
+						proxy.$message({
 							message: `${res.data.msg}`,
 							type: "success"
 						})
