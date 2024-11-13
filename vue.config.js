@@ -6,11 +6,11 @@ module.exports = {
 
     // 配置反向代理, 解决请求时的跨域
     devServer: {
-        port: 8068,
+        port: 80,
         allowedHosts: ['naodongzhizao.com'],
         proxy: {
             '/api': { // 只要是以 '/ajax' 开头的ajax请求都会自动加上 target 属性值
-                target: 'https://shiyan520.cn:8000',
+                target: 'https://shiyan520.cn:8068',
                 changeOrigin: true,
             }
         }
