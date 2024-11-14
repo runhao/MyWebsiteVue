@@ -6,7 +6,9 @@ LABEL MAINTAINER=1549971272@qq.com
 
 # 在容器内/var/www/html/下创建 文件夹
 RUN mkdir -p /var/www/html/vue
+RUN mkdir -p /var/log/nginx/
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
+RUN ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
 RUN touch /var/log/nginx/access.log
 
 # 设置容器内工作目录
