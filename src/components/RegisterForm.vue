@@ -89,7 +89,7 @@ export default {
 						})
 
 						// 路由跳转 
-						router.push('/index')
+						router.push('/login')
 					})
         } else {
           return false;
