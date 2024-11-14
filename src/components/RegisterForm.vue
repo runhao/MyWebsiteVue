@@ -6,9 +6,9 @@
     label-width="100px"
     class="registerForm sign-up-form"
   >
-    <el-form-item label="用户名" prop="name">
+    <el-form-item label="用户名" prop="username">
       <el-input
-        v-model="registerUser.name"
+        v-model="registerUser.username"
         placeholder="Enter username..."
       ></el-input>
     </el-form-item>
@@ -16,6 +16,12 @@
       <el-input
         v-model="registerUser.email"
         placeholder="Enter Email..."
+      ></el-input>
+    </el-form-item>
+    <el-form-item label="手机号" prop="phone">
+      <el-input
+        v-model="registerUser.phone"
+        placeholder="Enter Phone..."
       ></el-input>
     </el-form-item>
     <el-form-item label="密码" prop="password">
@@ -68,7 +74,7 @@ export default {
 
     // 触发注册方法
     const handleRegister = (formName: string) => {
-      console.log(formName)
+      // console.log(formName)
       // console.log(proxy)
       proxy.$refs[formName].validate((valid: boolean) => {
         if (valid) {
@@ -97,8 +103,8 @@ export default {
       });
     };
 
-    const getSuccessState = (data:any) => {
-      return !!data.success;
+    const getSuccessState = (result: any) => {
+      return !!result.data.success;
     }
 
     return { handleRegister };

@@ -5,7 +5,7 @@ interface RegisterUser {
   email: string;
   password: string;
   password2: string;
-  role: string;
+  phone: string;
 }
 
 export const registerUser = ref<RegisterUser>({
@@ -13,7 +13,7 @@ export const registerUser = ref<RegisterUser>({
   email: '',
   password: '',
   password2: '',
-  role: ''
+  phone: '',
 })
 
 
@@ -55,6 +55,16 @@ interface RegisterRules {
     trigger: string;
   } | {
     validator: (rule: RegisterUser, value:string, callback:any ) => void,
+    trigger: string;
+  })[];
+  phone: ({
+    message: string;
+    required: boolean;
+    trigger: string;
+  } | {
+    min: number;
+    max: number;
+    message: string;
     trigger: string;
   })[];
 }
@@ -109,6 +119,15 @@ export const registerRules = ref<RegisterRules>({
     },
     {
       validator: validatePass2,
+      trigger: 'blur'
+    }
+  ],
+  phone: [
+    {message: "phone can't be empty...", required: true, trigger: 'blur' },
+    {
+      min: 8,
+      max: 11,
+      message: "长度为8到11个数字",
       trigger: 'blur'
     }
   ],

@@ -1,7 +1,7 @@
 <template>
   <el-form ref="loginForm" :model="loginUser" :rules="rules" label-width="100px" class="loginForm sign-in-form">
     <el-form-item label="账号" prop="email">
-      <el-input v-model="loginUser.email" placeholder="用户名/邮箱."></el-input>
+      <el-input v-model="loginUser.name" placeholder="手机号/邮箱."></el-input>
     </el-form-item>
     <el-form-item label="密码" prop="password">
       <el-input v-model="loginUser.password" type="password" placeholder="请输入密码..."></el-input>
@@ -44,6 +44,7 @@ export default {
       proxy.$refs[formName].validate((valid: boolean) => {
         if (valid) {
           proxy.$axios.post("/api/user/login", props.loginUser).then((res: any) => {
+            debugger
             let isSuccess = getSuccessState(res.data)
             if (!isSuccess) {
               // 登录失败
@@ -71,8 +72,8 @@ export default {
       router.push('/forgotpassword')
     }
 
-    const getSuccessState = (data: any) => {
-      return !!data.success;
+    const getSuccessState = (result: any) => {
+      return !!result.data.success;
     }
 
     return {handleLogin, handleForgot}
