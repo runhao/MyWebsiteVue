@@ -22,6 +22,11 @@ const routes = [
     name: 'ForgotPassword',
     component: () => import('../views/ForgotPassword.vue')
   },
+    {
+    path: '/chat-gpt',
+    name: 'ChatGpt',
+    component: () => import('../views/ChatGpt.vue')
+  },
   {
     path: '/:catchAll(.*)',
     name: 'NotFount',
