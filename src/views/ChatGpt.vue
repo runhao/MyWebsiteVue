@@ -26,7 +26,7 @@ export default {
 </script>
 <style scoped>
 .content {
-  min-height: 500px;
+  min-height: 800px;
 }
 
 .footer {

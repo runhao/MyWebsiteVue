@@ -95,7 +95,7 @@ export default {
 						})
 
 						// 路由跳转 
-						router.push('/login')
+						router.push('/chat-gpt')
 					})
         } else {
           return false;
