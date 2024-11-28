@@ -4,9 +4,10 @@
     <iframe
       src="https://naodongzhizao.com:3000"
       width="100%"
-      height="500"
-      allowfullscreen>
-      style="border: none;"
+      height="800"
+      allowfullscreen
+      class="gpt-iframe"
+    >
     </iframe>
   </div>
   <Distribution class="footer"/>
@@ -27,6 +28,10 @@ export default {
 <style scoped>
 .content {
   min-height: 800px;
+}
+
+.gpt-iframe {
+  border: none;
 }
 
 .footer {
