@@ -2,7 +2,7 @@
   <div class="content">
     <!-- 嵌套外部网页 -->
     <iframe
-      src="https://naodongzhizao.com:3000"
+      src="https://localhost:3000"
       width="100%"
       height="800"
       allowfullscreen
