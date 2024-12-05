@@ -44,7 +44,6 @@ export default {
       proxy.$refs[formName].validate((valid: boolean) => {
         if (valid) {
           proxy.$axios.post("/api/user/login", props.loginUser).then((res: any) => {
-            debugger
             let isSuccess = getSuccessState(res.data)
             if (!isSuccess) {
               // 登录失败
@@ -54,6 +53,7 @@ export default {
               })
               return false
             }
+            jwtTokenStore(res)
             // 登录成功
             proxy.$message({
               message: `${res.data.msg}`,
@@ -74,6 +74,12 @@ export default {
 
     const getSuccessState = (result: any) => {
       return !!result.data.success;
+    }
+
+    const jwtTokenStore = (res: any) => {
+      // JWT
+      localStorage.setItem('access', res.data.data.access);
+      localStorage.setItem('refresh', res.data.data.refresh);
     }
 
     return {handleLogin, handleForgot}
