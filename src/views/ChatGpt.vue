@@ -33,8 +33,9 @@ export default {
           }
         });
         const data = response.data;
+        debugger
         // 弹出框显示返回的内容
-        alert(JSON.stringify(data)); // 你可以根据需要格式化显示内容
+        alert(`KEY值获取成功，请复制粘贴：${data.data.value}`); // 弹出框显示成功消息和 key 值
       } catch (error) {
         alert("获取KEY值失败，请重新登陆或联系管理员。");
       }
