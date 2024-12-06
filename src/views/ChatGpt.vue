@@ -60,7 +60,7 @@ export default {
         await proxy.$router.push("/login"); // 跳转到登录页面
         clearInterval(checkTokenInterval); // 清除定时器
       }
-    }, 6000); // 每分钟检查一次（60000 毫秒）
+    }, 5000); // 每分钟检查一次（60000 毫秒）
 
     // 在组件挂载后调用接口
     const fetchData = async () => {
