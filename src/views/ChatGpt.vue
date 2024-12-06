@@ -15,37 +15,39 @@
 
 <script>
 import Distribution from "@/components/Distribution.vue";
-import {getCurrentInstance, onMounted} from "vue";
-import {jwtDecode} from 'jwt-decode';
+import { getCurrentInstance, onMounted, onUnmounted } from "vue";
+import { jwtDecode } from 'jwt-decode';
 
 export default {
   name: "ChatGpt",
-  components: {Distribution},
+  components: { Distribution },
 
   setup() {
-    const {proxy} = getCurrentInstance()
+    const { proxy } = getCurrentInstance();
 
     // 检查 JWT 是否过期
     const isTokenExpired = async (accessToken, refreshToken) => {
       if (!accessToken) return true;
       const decoded = jwtDecode(accessToken);
       const now = Date.now() / 1000; // 当前时间（秒）
-      debugger
       if (decoded.exp < now) {
-        const response = await proxy.$axios.post("/api/refresh/", {
-          refresh: refreshToken // 将 refreshToken 放入请求体
-        }, {
-          headers: {
-            'Content-Type': 'application/json' // 确保请求头正确
-          }
-        });
-        if (response.status === 200) {
-          localStorage.setItem('access', response.data.access);
-          return false
+        try {
+          const res = await proxy.$axios.post("/api/refresh/", {
+            refresh: refreshToken // 将 refreshToken 放入请求体
+          }, {
+            headers: {
+              'Content-Type': 'application/json' // 确保请求头正确
+            }
+          });
+          localStorage.setItem('access', res.data.access);
+          return false; // 刷新成功，返回 false
+        } catch (error) {
+          // 捕获错误，检查是否是 401 状态
+          return error.response && error.response.status === 401;
+           // 或者根据需要返回其他值
         }
-        return true // 如果过期，返回 true
       }
-      return false
+      return false; // 令牌未过期
     };
 
     // 定期检查 JWT
@@ -55,14 +57,13 @@ export default {
 
       // 检查 JWT 是否过期
       const expired = await isTokenExpired(accessToken, refreshToken);
-
-      // 检查 JWT 是否过期
+      debugger
       if (expired) {
         alert("您的登录已过期，请重新登录。");
         await proxy.$router.push("/login"); // 跳转到登录页面
         clearInterval(checkTokenInterval); // 清除定时器
       }
-    }, 10000); // 每分钟检查一次（60000 毫秒）
+    }, 30000); // 每30秒检查一次
 
     // 在组件挂载后调用接口
     const fetchData = async () => {
@@ -78,6 +79,7 @@ export default {
         alert(`KEY值获取成功，请复制粘贴：${data.data.value}`); // 弹出框显示成功消息和 key 值
       } catch (error) {
         alert("获取KEY值失败，请重新登陆或联系管理员。");
+        console.error("获取KEY值失败:", error); // 记录错误信息
       }
     };
 
@@ -86,10 +88,16 @@ export default {
       fetchData(); // 组件挂载后调用接口
     });
 
+    // 清理定时器
+    onUnmounted(() => {
+      clearInterval(checkTokenInterval);
+    });
+
     return {}
   },
 }
 </script>
+
 <style scoped>
 .content {
   min-height: 800px;
@@ -104,4 +112,3 @@ export default {
   color: #555;
 }
 </style>
-
