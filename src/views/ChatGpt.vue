@@ -30,7 +30,7 @@ export default {
       if (!accessToken) return true;
       const decoded = jwtDecode(accessToken);
       const now = Date.now() / 1000; // 当前时间（秒）
-      if (decoded.exp > now) {
+      if (decoded.exp < now) {
         const response = await proxy.$axios.post("/api/refresh/", {
           refresh: refreshToken // 将 refreshToken 放入请求体
         }, {
@@ -60,7 +60,7 @@ export default {
         await proxy.$router.push("/login"); // 跳转到登录页面
         clearInterval(checkTokenInterval); // 清除定时器
       }
-    }, 5000); // 每分钟检查一次（60000 毫秒）
+    }, 10000); // 每分钟检查一次（60000 毫秒）
 
     // 在组件挂载后调用接口
     const fetchData = async () => {
