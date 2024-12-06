@@ -30,7 +30,7 @@ export default {
       if (!accessToken) return true;
       const decoded = jwtDecode(accessToken);
       const now = Date.now() / 1000; // 当前时间（秒）
-      if (decoded.exp < now) {
+      if (decoded.exp > now) {
         const response = await proxy.$axios.post("/api/refresh/", {
           refresh: refreshToken // 将 refreshToken 放入请求体
         }, {
@@ -38,12 +38,13 @@ export default {
             'Content-Type': 'application/json' // 确保请求头正确
           }
         });
-        if (response.status === 200){
+        if (response.status === 200) {
           localStorage.setItem('access', response.data.access);
           return false
         }
+        return true // 如果过期，返回 true
       }
-      return true// 如果过期，返回 true
+      return false
     };
 
     // 定期检查 JWT
