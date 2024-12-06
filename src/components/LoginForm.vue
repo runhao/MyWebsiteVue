@@ -10,7 +10,7 @@
       <el-button @click="handleLogin('loginForm')" type="primary" class="submit-btn">提交</el-button>
     </el-form-item>
     <!-- 找回密码 -->
-    <div class="tiparea">
+    <div class="tipArea">
       <!-- prevent取消默认时间 -->
       <p>忘记密码? <a @click.prevent="handleForgot">立即找回</a></p>
     </div>
@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import {useRouter} from "vue-router"
-import {ref, getCurrentInstance} from 'vue'
+import {getCurrentInstance} from 'vue'
 
 export default {
   props: {
@@ -102,13 +102,13 @@ export default {
   width: 100%;
 }
 
-.tiparea {
+.tipArea {
   text-align: right;
   font-size: 12px;
   color: #333;
 }
 
-.tiparea p a {
+.tipArea p a {
   color: #409eff;
 }
 
