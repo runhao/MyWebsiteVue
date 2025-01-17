@@ -7,6 +7,10 @@
         <button type="button" @click="clickLogin">进入门户页面</button>
       </form>
     </dialog>
+    <div>
+      <a href="http://shiyan520.cn:8080">Jenkins</a>
+      <a href="http://naodongzhizao.com/admin">admin</a>
+    </div>
   </div>
   <Distribution class="footer"/>
 </template>

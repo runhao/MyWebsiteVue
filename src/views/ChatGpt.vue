@@ -69,17 +69,17 @@ export default {
     const fetchData = async () => {
       try {
         const accessToken = localStorage.getItem('access'); // 从 localStorage 获取 JWT
-        const response = await proxy.$axios.post("/api/openai/key", {}, {
+        const response = await proxy.$axios.post("/api/openai/token", {}, {
           headers: {
             Authorization: `Bearer ${accessToken}` // 将 JWT 添加到请求头
           }
         });
         const data = response.data;
         // 弹出框显示返回的内容
-        alert(`KEY值获取成功，请复制粘贴：${data.data.value}`); // 弹出框显示成功消息和 key 值
+        alert(`TOKEN值获取成功，请复制粘贴：${data.data.value}`); // 弹出框显示成功消息和 TOKEN 值
       } catch (error) {
-        alert("获取KEY值失败，请重新登陆或联系管理员。");
-        console.error("获取KEY值失败:", error); // 记录错误信息
+        alert("获取TOKEN值失败，请重新登陆或联系管理员。");
+        console.error("获取TOKEN值失败:", error); // 记录错误信息
       }
     };
 
