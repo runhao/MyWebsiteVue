@@ -6,7 +6,7 @@
         width="100%"
         height="800"
         allowfullscreen
-        class="gpt-iframe"
+        class="chat-any-iframe"
     >
     </iframe>
   </div>
@@ -19,7 +19,7 @@ import { getCurrentInstance, onMounted, onUnmounted } from "vue";
 import { jwtDecode } from 'jwt-decode';
 
 export default {
-  name: "ChatGpt",
+  name: "ChatAny",
   components: { Distribution },
 
   setup() {
@@ -60,7 +60,7 @@ export default {
       debugger
       if (expired) {
         alert("您的登录已过期，请重新登录。");
-        await proxy.$router.push("/login"); // 跳转到登录页面
+        await proxy.$router.push("/");
         clearInterval(checkTokenInterval); // 清除定时器
       }
     }, 30000); // 每30秒检查一次
@@ -103,7 +103,7 @@ export default {
   min-height: 800px;
 }
 
-.gpt-iframe {
+.chat-any-iframe {
   border: none;
 }
 

@@ -60,7 +60,7 @@ export default {
               type: "success"
             })
             // 路由跳转
-            router.push('/chat-gpt')
+            router.push('/')
           })
         } else {
           return false;
