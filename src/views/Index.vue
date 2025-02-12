@@ -10,8 +10,7 @@
     <div class="content">
       <h1 class="title">脑洞制造</h1>
       <div class="card-container">
-        <!-- 原有卡片内容保持不变 -->
-        <a href="/chat-any" class="card">
+        <a :href="isLoggedIn ? '/chat-any' : 'javascript:void(0)'" class="card" :class="{ disabled: !isLoggedIn }">
           <h2>交互</h2>
           <p>Openai、Midjourney、Deepseek</p>
         </a>
@@ -19,11 +18,11 @@
           <h2>欢迎</h2>
           <p>这是我女朋友</p>
         </a>
-        <a href="http://shiyan520.cn:8080" class="card">
+        <a :href="isLoggedIn ? 'http://shiyan520.cn:8080' : 'javascript:void(0)'" class="card" :class="{ disabled: !isLoggedIn }">
           <h2>部署</h2>
           <p>Jenkins持续集成与部署平台</p>
         </a>
-        <a href="http://naodongzhizao.com/admin" class="card">
+        <a :href="isLoggedIn ? 'http://naodongzhizao.com/admin' : 'javascript:void(0)'" class="card" :class="{ disabled: !isLoggedIn }">
           <h2>管理</h2>
           <p>Django后台管理系统</p>
         </a>
@@ -41,8 +40,8 @@
         </a>
       </div>
     </div>
+    <Distribution class="footer"/>
   </div>
-  <Distribution class="footer"/>
 </template>
 
 <script>
@@ -92,7 +91,9 @@ export default {
 <style scoped>
 /* 新增容器样式 */
 .app-container {
-  min-height: 100vh;
+  min-height: 115vh;
+  display: flex;
+  flex-direction: column;
   position: relative;
   background-color: #f8f9fa;
 }
@@ -129,6 +130,7 @@ export default {
 
 /* 调整内容区域间距 */
 .content {
+  flex: 1; /* 使内容区域填充剩余空间 */
   padding: 80px 20px 20px; /* 顶部留出状态栏空间 */
   display: flex;
   flex-direction: column;
@@ -182,12 +184,13 @@ export default {
 }
 
 .footer {
-  height: 10%;
-  background-color: #eee;
+  background-color: rgba(255, 255, 255, 0.4); /* 半透明背景 */
   color: #555;
   padding: 10px;
   text-align: center;
   width: 100%;
+  position: relative; /* 相对定位 */
+  z-index: 10; /* 确保 footer 在背景之上 */
 }
 
 .disabled {
