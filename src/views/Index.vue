@@ -1,10 +1,9 @@
 <template>
   <div class="app-container" :style="backgroundStyle">
-    <!-- 状态栏 -->
     <div class="status-bar">
       <span>当前用户：{{ isLoggedIn ? '已登录' : '访客' }}</span>
       <a v-if="!isLoggedIn" href="/login" class="login-link">登录</a>
-      <button v-else class="logout-button" @click="logout">退出</button>
+      <button v-else class="logout-button" @click="indexLogout">退出</button>
     </div>
 
     <div class="content">
@@ -18,11 +17,13 @@
           <h2>欢迎</h2>
           <p>这是我女朋友</p>
         </a>
-        <a :href="isLoggedIn ? 'http://shiyan520.cn:8080' : 'javascript:void(0)'" class="card" :class="{ disabled: !isLoggedIn }">
+        <a :href="isLoggedIn ? 'http://shiyan520.cn:8080' : 'javascript:void(0)'" class="card"
+           :class="{ disabled: !isLoggedIn }">
           <h2>部署</h2>
           <p>Jenkins持续集成与部署平台</p>
         </a>
-        <a :href="isLoggedIn ? 'http://naodongzhizao.com/admin' : 'javascript:void(0)'" class="card" :class="{ disabled: !isLoggedIn }">
+        <a :href="isLoggedIn ? 'http://naodongzhizao.com/admin' : 'javascript:void(0)'" class="card"
+           :class="{ disabled: !isLoggedIn }">
           <h2>管理</h2>
           <p>Django后台管理系统</p>
         </a>
@@ -30,11 +31,13 @@
           <h2>仓库</h2>
           <p>Github</p>
         </a>
-        <a :href="isLoggedIn ? 'http://192.168.6.1' : 'javascript:void(0)'" class="card" :class="{ disabled: !isLoggedIn }">
+        <a :href="isLoggedIn ? 'http://192.168.6.1' : 'javascript:void(0)'" class="card"
+           :class="{ disabled: !isLoggedIn }">
           <h2>网络</h2>
           <p>OpenWrt</p>
         </a>
-        <a :href="isLoggedIn ? 'http://192.168.31.211:8123' : 'javascript:void(0)'" class="card" :class="{ disabled: !isLoggedIn }">
+        <a :href="isLoggedIn ? 'http://192.168.31.211:8123' : 'javascript:void(0)'" class="card"
+           :class="{ disabled: !isLoggedIn }">
           <h2>家居</h2>
           <p>HomeAssistant</p>
         </a>
@@ -46,6 +49,7 @@
 
 <script>
 import Distribution from "@/components/Distribution.vue";
+import {isTokenExpired, logout} from "@/utils/tokenExpire";
 
 export default {
   name: "Index",
@@ -54,7 +58,8 @@ export default {
   },
   data() {
     return {
-      isLoggedIn: false, // 默认未登录
+      isLoggedIn: false,
+      checkInterval: null
     };
   },
   computed: {
@@ -68,28 +73,50 @@ export default {
     }
   },
   created() {
-    this.checkLoginStatus(); // 组件创建时检查登录状态
+    this.checkLoginStatus();
+    this.startTokenCheck();
+  },
+  beforeDestroy() {
+    this.stopTokenCheck();
   },
   methods: {
     checkLoginStatus() {
-      // 检查 localStorage 中是否存在 access 和 refresh 令牌
       const accessToken = localStorage.getItem('access');
       const refreshToken = localStorage.getItem('refresh');
-      this.isLoggedIn = !!accessToken && !!refreshToken; // 如果两者都存在，则用户已登录
+      this.isLoggedIn = !!accessToken && !!refreshToken;
     },
-    logout() {
-      // 清除 localStorage 中的令牌
-      localStorage.removeItem('access');
-      localStorage.removeItem('refresh');
-      this.isLoggedIn = false; // 更新登录状态
-      alert('已退出登录');
+    async checkTokenExpiry() {
+      const accessToken = localStorage.getItem('access');
+      const refreshToken = localStorage.getItem('refresh');
+      if (accessToken && refreshToken) {
+        const expired = await isTokenExpired(accessToken, refreshToken);
+        if (expired) {
+          this.isLoggedIn = false;
+          this.indexLogout();
+        }
+      }
+    },
+    indexLogout() {
+      this.isLoggedIn = false;
+      logout()
+    },
+    startTokenCheck() {
+      this.checkInterval = setInterval(() => {
+        if (this.isLoggedIn) {
+          this.checkTokenExpiry();
+        }
+      }, 30000);
+    },
+    stopTokenCheck() {
+      if (this.checkInterval) {
+        clearInterval(this.checkInterval);
+      }
     }
   }
 };
 </script>
 
 <style scoped>
-/* 新增容器样式 */
 .app-container {
   min-height: 115vh;
   display: flex;
@@ -98,7 +125,6 @@ export default {
   background-color: #f8f9fa;
 }
 
-/* 状态栏样式 */
 .status-bar {
   position: absolute;
   top: 20px;
@@ -128,16 +154,14 @@ export default {
   background-color: #d0e3ff;
 }
 
-/* 调整内容区域间距 */
 .content {
-  flex: 1; /* 使内容区域填充剩余空间 */
-  padding: 80px 20px 20px; /* 顶部留出状态栏空间 */
+  flex: 1;
+  padding: 80px 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* 保持原有其他样式不变 */
 .title {
   font-size: 2.5rem;
   color: #333;
@@ -184,13 +208,13 @@ export default {
 }
 
 .footer {
-  background-color: rgba(255, 255, 255, 0.4); /* 半透明背景 */
+  background-color: rgba(255, 255, 255, 0.4);
   color: #555;
   padding: 10px;
   text-align: center;
   width: 100%;
-  position: relative; /* 相对定位 */
-  z-index: 10; /* 确保 footer 在背景之上 */
+  position: relative;
+  z-index: 10;
 }
 
 .disabled {
