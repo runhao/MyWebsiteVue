@@ -2,29 +2,29 @@
   <div class="app-container" :style="backgroundStyle">
     <div class="status-bar">
       <span>当前用户：{{ isLoggedIn ? '已登录' : '访客' }}</span>
-      <a v-if="!isLoggedIn" href="/login" class="login-link">登录</a>
+      <router-link v-if="!isLoggedIn" to="/login" class="login-link">登录</router-link>
       <button v-else class="logout-button" @click="indexLogout">退出</button>
     </div>
 
     <div class="content">
       <h1 class="title">脑洞制造</h1>
       <div class="card-container">
-        <a :href="isLoggedIn ? '/chat-any' : 'javascript:void(0)'" class="card" :class="{ disabled: !isLoggedIn }">
-          <h2>交互</h2>
+        <router-link :to="isLoggedIn ? '/chat-any' : 'javascript:void(0)'" class="card" :class="{ disabled: !isLoggedIn }">
+          <h2>交互<span v-if="!isLoggedIn">(无权限)</span></h2>
           <p>Openai、Midjourney、Deepseek</p>
-        </a>
-        <a href="/wellcome" class="card">
+        </router-link>
+        <router-link to="/wellcome" class="card">
           <h2>欢迎</h2>
           <p>这是我女朋友</p>
-        </a>
+        </router-link>
         <a :href="isLoggedIn ? 'http://shiyan520.cn:8080' : 'javascript:void(0)'" class="card"
            :class="{ disabled: !isLoggedIn }">
-          <h2>部署</h2>
+          <h2>部署<span v-if="!isLoggedIn">(无权限)</span></h2>
           <p>Jenkins持续集成与部署平台</p>
         </a>
         <a :href="isLoggedIn ? 'http://naodongzhizao.com/admin' : 'javascript:void(0)'" class="card"
            :class="{ disabled: !isLoggedIn }">
-          <h2>管理</h2>
+          <h2>管理<span v-if="!isLoggedIn">(无权限)</span></h2>
           <p>Django后台管理系统</p>
         </a>
         <a href="https://github.com/runhao?tab=repositories" class="card">
@@ -33,12 +33,12 @@
         </a>
         <a :href="isLoggedIn ? 'http://192.168.6.1' : 'javascript:void(0)'" class="card"
            :class="{ disabled: !isLoggedIn }">
-          <h2>网络</h2>
+          <h2>网络<span v-if="!isLoggedIn">(无权限)</span></h2>
           <p>OpenWrt</p>
         </a>
         <a :href="isLoggedIn ? 'http://192.168.31.211:8123' : 'javascript:void(0)'" class="card"
            :class="{ disabled: !isLoggedIn }">
-          <h2>家居</h2>
+          <h2>家居<span v-if="!isLoggedIn">(无权限)</span></h2>
           <p>HomeAssistant</p>
         </a>
       </div>
