@@ -98,7 +98,7 @@ export default {
 
 /* form表单 */
 .loginForm {
-  margin-top: 20px;
+  margin-top: 100px;
   background-color: #fff;
   padding: 20px 40px 20px 20px;
   border-radius: 5px;
@@ -117,6 +117,10 @@ export default {
 
 .tipArea p a {
   color: #409eff;
+}
+
+.sign-in-form {
+  z-index: 2;
 }
 
 </style>

@@ -17,6 +17,19 @@
         v-model="registerUser.email"
         placeholder="Enter Email..."
       ></el-input>
+      <el-button
+        @click="sendVerificationCode"
+        :disabled="isCodeSent"
+        type="primary"
+        class="send-code-btn"
+        >{{ isCodeSent ? `已发送 (${countdown}s)` : '发送验证码' }}</el-button
+      >
+    </el-form-item>
+    <el-form-item label="验证码" prop="verificationCode">
+      <el-input
+        v-model="registerUser.verificationCode"
+        placeholder="Enter Verification Code..."
+      ></el-input>
     </el-form-item>
     <el-form-item label="手机号" prop="phone">
       <el-input
@@ -46,14 +59,12 @@
         >注册</el-button
       >
     </el-form-item>
-    <!-- 找回密码 -->
-
   </el-form>
 </template>
 
 <script lang="ts">
-import { getCurrentInstance } from "vue";
-import { useRouter } from "vue-router"
+import { ref, getCurrentInstance } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   props: {
@@ -66,51 +77,129 @@ export default {
       required: true,
     },
   },
-  setup(props:any) {
+  setup(props: any) {
     // @ts-ignore
     const { proxy } = getCurrentInstance();
+    const router = useRouter();
 
-		const router = useRouter()
+    const isCodeSent = ref(false); // 是否已发送验证码
+    const countdown = ref(60); // 倒计时
+
+    // 发送验证码
+    const sendVerificationCode = () => {
+      if (!props.registerUser.email) {
+        proxy.$message({
+          message: "请输入邮箱地址",
+          type: "error",
+        });
+        return;
+      }
+
+      // 调用邮箱验证码接口
+      proxy.$axios
+        .post("/api/user/email_verification", { email: props.registerUser.email })
+        .then((res: any) => {
+          if (res.data.data.success) {
+            isCodeSent.value = true;
+            startCountdown();
+            proxy.$message({
+              message: "验证码已发送，请查收邮件",
+              type: "success",
+            });
+          } else {
+            proxy.$message({
+              message: res.data.msg,
+              type: "error",
+            });
+          }
+        })
+        .catch((err: any) => {
+          proxy.$message({
+            message: "发送验证码失败，请稍后重试",
+            type: "error",
+          });
+        });
+    };
+
+    // 倒计时功能
+    const startCountdown = () => {
+      const timer = setInterval(() => {
+        if (countdown.value > 0) {
+          countdown.value--;
+        } else {
+          clearInterval(timer);
+          isCodeSent.value = false;
+          countdown.value = 60;
+        }
+      }, 1000);
+    };
 
     // 触发注册方法
     const handleRegister = (formName: string) => {
-      // console.log(formName)
-      // console.log(proxy)
       proxy.$refs[formName].validate((valid: boolean) => {
         if (valid) {
-          // alert("submit!");
-          proxy.$axios.post("/api/user/register", props.registerUser).then((res:any) =>{
-            let isSuccess = getSuccessState(res.data)
-            if (!isSuccess){
+          debugger
+          // 调用注册接口，传递用户信息和验证码
+          proxy.$axios
+            .post("/api/user/register", props.registerUser)
+            .then((res: any) => {
+              if (res.data.success) {
+                // 注册成功
+                proxy.$message({
+                  message: "注册成功",
+                  type: "success",
+                });
+                // 路由跳转
+                router.push("/");
+              } else {
+                proxy.$message({
+                  message: res.data.msg || "注册失败",
+                  type: "error",
+                });
+              }
+            })
+            .catch((err: any) => {
               proxy.$message({
-                message: `${res.data.msg}`,
-                type: "error"
-              })
-              return false
-            }
-						// 注册成功
-						proxy.$message({
-							message: `${res.data.msg}`,
-							type: "success"
-						})
-
-						// 路由跳转 
-						router.push('/')
-					})
+                message: "注册失败，请稍后重试",
+                type: "error",
+              });
+            });
         } else {
+          proxy.$message({
+            message: "请填写完整信息",
+            type: "error",
+          });
           return false;
         }
       });
     };
 
-    const getSuccessState = (result: any) => {
-      return !!result.data.success;
-    }
-
-    return { handleRegister };
+    return { handleRegister, sendVerificationCode, isCodeSent, countdown };
   },
 };
 </script>
 
+
 <style scoped>
+.registerForm {
+  margin-top: -100px;
+  background-color: #fff;
+  padding: 20px 40px 20px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px #cccc;
+}
+
+.submit-btn {
+  width: 100%;
+}
+
+.send-code-btn {
+  margin-left: 10px;
+}
+
+.sign-up-form {
+  opacity: 0;
+  z-index: 1;
+}
+
 </style>

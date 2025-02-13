@@ -6,6 +6,7 @@ interface RegisterUser {
   password: string;
   password2: string;
   phone: string;
+  verificationCode: string;
 }
 
 export const registerUser = ref<RegisterUser>({
@@ -14,8 +15,8 @@ export const registerUser = ref<RegisterUser>({
   password: '',
   password2: '',
   phone: '',
+  verificationCode: '',
 })
-
 
 interface RegisterRules {
   name: ({
@@ -67,6 +68,15 @@ interface RegisterRules {
     message: string;
     trigger: string;
   })[];
+  verificationCode: ({
+    message: string;
+    required: boolean;
+    trigger: string;
+  } | {
+    len: number;
+    message: string;
+    trigger: string;
+  })[];
 }
 
 const validatePass2 = (rule:RegisterUser, value:string, callback:any) => {
@@ -93,9 +103,9 @@ export const registerRules = ref<RegisterRules>({
     { type: "email", message: "Email is incorrect...", required: true, trigger: 'blur' }
   ],
   password: [
-    { 
-      required: true, 
-      message: "Password could not be empty...", 
+    {
+      required: true,
+      message: "Password could not be empty...",
       trigger: 'blur'
     },
     {
@@ -106,9 +116,9 @@ export const registerRules = ref<RegisterRules>({
     }
   ],
   password2: [
-    { 
-      required: true, 
-      message: "Password could not be empty...", 
+    {
+      required: true,
+      message: "Password could not be empty...",
       trigger: 'blur'
     },
     {
@@ -131,8 +141,12 @@ export const registerRules = ref<RegisterRules>({
       trigger: 'blur'
     }
   ],
+  verificationCode: [
+    { message: "验证码不能为空", required: true, trigger: 'blur' },
+    {
+      len: 6,
+      message: "验证码必须为6位数字",
+      trigger: 'blur'
+    }
+  ]
 })
-
-
-
-
