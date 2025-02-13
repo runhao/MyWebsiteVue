@@ -1,7 +1,7 @@
 <template>
   <div class="app-container" :style="backgroundStyle">
     <div class="status-bar">
-      <span>当前用户：{{ isLoggedIn ? '已登录' : '访客' }}</span>
+      <span>当前用户：{{ isLoggedIn ? userName : '访客' }}</span>
       <router-link v-if="!isLoggedIn" to="/login" class="login-link">登录</router-link>
       <button v-else class="logout-button" @click="indexLogout">退出</button>
     </div>
@@ -9,7 +9,8 @@
     <div class="content">
       <h1 class="title">脑洞制造</h1>
       <div class="card-container">
-        <router-link :to="isLoggedIn ? '/chat-any' : 'javascript:void(0)'" class="card" :class="{ disabled: !isLoggedIn }">
+        <router-link :to="isLoggedIn ? '/chat-any' : 'javascript:void(0)'" class="card"
+                     :class="{ disabled: !isLoggedIn }">
           <h2>交互<span v-if="!isLoggedIn">(无权限)</span></h2>
           <p>Openai、Midjourney、Deepseek</p>
         </router-link>
@@ -49,7 +50,7 @@
 
 <script>
 import Distribution from "@/components/Distribution.vue";
-import {isTokenExpired, logout} from "@/utils/tokenExpire";
+import {isTokenExpired, logout, computeUserName} from "@/utils/token";
 
 export default {
   name: "Index",
@@ -59,6 +60,7 @@ export default {
   data() {
     return {
       isLoggedIn: false,
+      userName: '',
       checkInterval: null
     };
   },
@@ -92,13 +94,12 @@ export default {
         const expired = await isTokenExpired(accessToken, refreshToken);
         if (expired) {
           this.isLoggedIn = false;
-          this.indexLogout();
         }
       }
     },
     indexLogout() {
       this.isLoggedIn = false;
-      logout()
+      logout();
     },
     startTokenCheck() {
       this.checkInterval = setInterval(() => {
@@ -110,6 +111,17 @@ export default {
     stopTokenCheck() {
       if (this.checkInterval) {
         clearInterval(this.checkInterval);
+      }
+    },
+  },
+  watch: {
+    isLoggedIn(newVal) {
+      if (!newVal) {
+        logout();
+        this.userName = ''
+      }else{
+        const accessToken = localStorage.getItem('access');
+        this.userName = computeUserName(accessToken)
       }
     }
   }

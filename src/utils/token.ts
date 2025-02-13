@@ -5,11 +5,11 @@ import axios from 'axios';
 export const isTokenExpired = async (accessToken: string, refreshToken: string): Promise<boolean> => {
     if (!accessToken) return true;
 
-    const decoded = jwtDecode(accessToken);
+    const tokenDecoded = jwtDecode(accessToken);
     const now = Date.now() / 1000; // 当前时间（秒）
 
-    // @ts-ignore
-    if (decoded.exp < now) {
+    const expireTime =  (tokenDecoded as any)?.exp as number | false;
+    if (expireTime < now) {
         try {
             const res = await axios.post("/api/refresh/", {
                 refresh: refreshToken // 将 refreshToken 放入请求体
@@ -25,7 +25,6 @@ export const isTokenExpired = async (accessToken: string, refreshToken: string):
             return error.response && error.response.status === 401; // 或者根据需要返回其他值
         }
     }
-
     return false; // 令牌未过期
 };
 
@@ -33,4 +32,11 @@ export const logout = () => {
     localStorage.removeItem('access');
     localStorage.removeItem('refresh');
     alert('请重新登录。');
+}
+
+export const computeUserName = (token: string) => {
+    const tokenDecoded = jwtDecode(token);
+    // 使用可选链操作符和类型断言确保代码的健壮性
+    const user_id =  (tokenDecoded as any)?.user_id as number | false;
+    return user_id
 }

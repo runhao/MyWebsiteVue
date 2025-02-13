@@ -9,7 +9,7 @@
 <script>
 import Distribution from "@/components/Distribution.vue";
 import {getCurrentInstance, onMounted, onUnmounted} from "vue";
-import {isTokenExpired, logout} from "@/utils/tokenExpire";
+import {isTokenExpired, logout} from "@/utils/token";
 
 export default {
   name: "ChatAny",
