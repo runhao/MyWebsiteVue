@@ -1,5 +1,12 @@
 <template>
-  <el-form ref="loginForm" :model="loginUser" :rules="rules" label-width="100px" class="loginForm sign-in-form">
+  <el-form
+    ref="loginForm"
+    :model="loginUser"
+    :rules="rules"
+    label-width="100px"
+    class="loginForm sign-in-form"
+    @keyup.enter="handleLogin('loginForm')"
+  >
     <el-form-item label="账号" prop="email">
       <el-input v-model="loginUser.name" placeholder="手机号/邮箱."></el-input>
     </el-form-item>

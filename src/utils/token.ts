@@ -8,7 +8,7 @@ export const isTokenExpired = async (accessToken: string, refreshToken: string):
     const tokenDecoded = jwtDecode(accessToken);
     const now = Date.now() / 1000; // 当前时间（秒）
 
-    const expireTime =  (tokenDecoded as any)?.exp as number | false;
+    const expireTime = (tokenDecoded as any)?.exp as number | false;
     if (expireTime < now) {
         try {
             const res = await axios.post("/api/refresh/", {
@@ -34,9 +34,16 @@ export const logout = () => {
     alert('请重新登录。');
 }
 
-export const computeUserName = (token: string) => {
+export const computeUserName = async (token: string) => {
     const tokenDecoded = jwtDecode(token);
     // 使用可选链操作符和类型断言确保代码的健壮性
-    const user_id =  (tokenDecoded as any)?.user_id as number | false;
-    return user_id
+    const user_id = (tokenDecoded as any)?.user_id as number | false;
+    const res = await axios.post("/api/user/name", {
+        user_id: user_id
+    }, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        }
+    });
+    return res.data.data.username; // 刷新成功，返回 false
 }

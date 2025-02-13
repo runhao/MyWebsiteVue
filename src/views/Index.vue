@@ -94,7 +94,9 @@ export default {
         const expired = await isTokenExpired(accessToken, refreshToken);
         if (expired) {
           this.isLoggedIn = false;
+          return true
         }
+        return false
       }
     },
     indexLogout() {
@@ -102,9 +104,12 @@ export default {
       logout();
     },
     startTokenCheck() {
-      this.checkInterval = setInterval(() => {
+      this.checkInterval = setInterval(async() => {
         if (this.isLoggedIn) {
-          this.checkTokenExpiry();
+          if (!await this.checkTokenExpiry()){
+            debugger
+            this.userName = await computeUserName(localStorage.getItem('access'))
+          }
         }
       }, 30000);
     },
@@ -115,15 +120,12 @@ export default {
     },
   },
   watch: {
-    isLoggedIn(newVal) {
+    async isLoggedIn(newVal) {
       if (!newVal) {
         logout();
         this.userName = ''
-      }else{
-        const accessToken = localStorage.getItem('access');
-        this.userName = computeUserName(accessToken)
       }
-    }
+    },
   }
 };
 </script>
