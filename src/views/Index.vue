@@ -104,11 +104,21 @@ export default {
       logout();
     },
     startTokenCheck() {
-      this.checkInterval = setInterval(async() => {
+      // 立即执行一次
+      this.checkTokenExpiry().then(async () => {
         if (this.isLoggedIn) {
-          if (!await this.checkTokenExpiry()){
+          if (!await this.checkTokenExpiry()) {
             debugger
-            this.userName = await computeUserName(localStorage.getItem('access'))
+            this.userName = await computeUserName(localStorage.getItem('access'));
+          }
+        }
+      });
+
+      // 每30秒重复执行
+      this.checkInterval = setInterval(async () => {
+        if (this.isLoggedIn) {
+          if (!await this.checkTokenExpiry()) {
+            this.userName = await computeUserName(localStorage.getItem('access'));
           }
         }
       }, 30000);
@@ -117,7 +127,8 @@ export default {
       if (this.checkInterval) {
         clearInterval(this.checkInterval);
       }
-    },
+    }
+    ,
   },
   watch: {
     async isLoggedIn(newVal) {
@@ -125,9 +136,11 @@ export default {
         logout();
         this.userName = ''
       }
-    },
+    }
+    ,
   }
-};
+}
+;
 </script>
 
 <style scoped>
