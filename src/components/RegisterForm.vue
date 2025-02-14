@@ -144,7 +144,6 @@ export default {
     const handleRegister = (formName: string) => {
       proxy.$refs[formName].validate((valid: boolean) => {
         if (valid) {
-          debugger
           // 调用注册接口，传递用户信息和验证码
           proxy.$axios
             .post("/api/user/register", props.registerUser)
