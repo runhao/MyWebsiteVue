@@ -91,7 +91,7 @@ const validatePass2 = (rule:RegisterUser, value:string, callback:any) => {
 
 export const registerRules = ref<RegisterRules>({
   name: [
-    { message: "username can't be empty...", required: true, trigger: 'blur' },
+    { message: "name can't be empty...", required: true, trigger: 'blur' },
     {
       min: 2,
       max: 30,

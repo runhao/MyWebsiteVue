@@ -34,7 +34,7 @@ export const logout = () => {
     alert('请重新登录。');
 }
 
-export const computeUserName = async (token: string) => {
+export const computeName = async (token: string) => {
     const tokenDecoded = jwtDecode(token);
     // 使用可选链操作符和类型断言确保代码的健壮性
     const user_id = (tokenDecoded as any)?.user_id as number | false;
@@ -45,5 +45,5 @@ export const computeUserName = async (token: string) => {
             'Authorization': `Bearer ${token}`,
         }
     });
-    return res.data.data.username; // 刷新成功，返回 false
+    return res.data.data.name; // 刷新成功，返回 false
 }

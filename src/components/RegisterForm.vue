@@ -6,10 +6,10 @@
     label-width="100px"
     class="registerForm sign-up-form"
   >
-    <el-form-item label="用户名" prop="username">
+    <el-form-item label="用户昵称" prop="name">
       <el-input
-        v-model="registerUser.username"
-        placeholder="Enter username..."
+        v-model="registerUser.name"
+        placeholder="Enter name..."
       ></el-input>
     </el-form-item>
     <el-form-item label="邮箱" prop="email">

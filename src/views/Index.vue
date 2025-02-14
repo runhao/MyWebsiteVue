@@ -1,7 +1,7 @@
 <template>
   <div class="app-container" :style="backgroundStyle">
     <div class="status-bar">
-      <span>当前用户：{{ isLoggedIn ? userName : '访客' }}</span>
+      <span>当前用户：{{ isLoggedIn ? name : '访客' }}</span>
       <router-link v-if="!isLoggedIn" to="/login" class="login-link">登录</router-link>
       <button v-else class="logout-button" @click="indexLogout">退出</button>
     </div>
@@ -50,7 +50,7 @@
 
 <script>
 import Distribution from "@/components/Distribution.vue";
-import {isTokenExpired, logout, computeUserName} from "@/utils/token";
+import {isTokenExpired, logout, computeName} from "@/utils/token";
 
 export default {
   name: "Index",
@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       isLoggedIn: false,
-      userName: '',
+      name: '',
       checkInterval: null
     };
   },
@@ -109,7 +109,7 @@ export default {
         if (this.isLoggedIn) {
           if (!await this.checkTokenExpiry()) {
             debugger
-            this.userName = await computeUserName(localStorage.getItem('access'));
+            this.name = await computeName(localStorage.getItem('access'));
           }
         }
       });
@@ -118,7 +118,7 @@ export default {
       this.checkInterval = setInterval(async () => {
         if (this.isLoggedIn) {
           if (!await this.checkTokenExpiry()) {
-            this.userName = await computeUserName(localStorage.getItem('access'));
+            this.name = await computeName(localStorage.getItem('access'));
           }
         }
       }, 30000);
@@ -134,7 +134,7 @@ export default {
     async isLoggedIn(newVal) {
       if (!newVal) {
         logout();
-        this.userName = ''
+        this.name = ''
       }
     }
     ,
