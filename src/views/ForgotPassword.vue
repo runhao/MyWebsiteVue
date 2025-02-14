@@ -122,7 +122,7 @@ export default {
                 new_password: forgotUser.value.newPassword
               })
               .then((res: any) => {
-                if (res.data.success) {
+                if (res.data.data.success) {
                   proxy.$message({
                     message: '密码重置成功',
                     type: 'success',
