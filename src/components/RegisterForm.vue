@@ -149,7 +149,7 @@ export default {
           proxy.$axios
             .post("/api/user/register", props.registerUser)
             .then((res: any) => {
-              if (res.data.success) {
+              if (res.data.data.success) {
                 // 注册成功
                 proxy.$message({
                   message: "注册成功",
@@ -159,7 +159,7 @@ export default {
                 router.push("/");
               } else {
                 proxy.$message({
-                  message: res.data.msg || "注册失败",
+                  message: res.data.msg,
                   type: "error",
                 });
               }
