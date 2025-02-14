@@ -17,19 +17,25 @@
         v-model="registerUser.email"
         placeholder="Enter Email..."
       ></el-input>
-      <el-button
-        @click="sendVerificationCode"
-        :disabled="isCodeSent"
-        type="primary"
-        class="send-code-btn"
-        >{{ isCodeSent ? `已发送 (${countdown}s)` : '发送验证码' }}</el-button
-      >
     </el-form-item>
     <el-form-item label="验证码" prop="verificationCode">
-      <el-input
-        v-model="registerUser.verificationCode"
-        placeholder="Enter Verification Code..."
-      ></el-input>
+      <el-row :gutter="10">
+        <el-col :span="16">
+          <el-input
+            v-model="registerUser.verificationCode"
+            placeholder="Enter Verification Code..."
+          ></el-input>
+        </el-col>
+        <el-col :span="8">
+          <el-button
+            @click="sendVerificationCode"
+            :disabled="isCodeSent"
+            type="primary"
+            class="send-code-btn"
+            >{{ isCodeSent ? `已发送 (${countdown}s)` : '发送验证码' }}</el-button
+          >
+        </el-col>
+      </el-row>
     </el-form-item>
     <el-form-item label="手机号" prop="phone">
       <el-input
@@ -179,7 +185,6 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .registerForm {
   margin-top: -100px;
@@ -194,12 +199,11 @@ export default {
 }
 
 .send-code-btn {
-  margin-left: 10px;
+  width: 100%;
 }
 
 .sign-up-form {
   opacity: 0;
   z-index: 1;
 }
-
 </style>
