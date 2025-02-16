@@ -73,7 +73,8 @@ export default {
       // 调用邮箱验证码接口
       proxy.$axios
           .post('/api/user/email_verification', {
-            email: forgotUser.value.email
+            email: forgotUser.value.email,
+            action: '重置密码',
           })
           .then((res: any) => {
             if (res.data.data.success) {

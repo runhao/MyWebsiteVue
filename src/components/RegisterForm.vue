@@ -103,7 +103,10 @@ export default {
 
       // 调用邮箱验证码接口
       proxy.$axios
-        .post("/api/user/email_verification", { email: props.registerUser.email })
+        .post("/api/user/email_verification", {
+          email: props.registerUser.email,
+          action: '注册账号',
+        })
         .then((res: any) => {
           if (res.data.data.success) {
             isCodeSent.value = true;
