@@ -40,7 +40,7 @@ export default {
           }
         });
         const data = response.data;
-        alert(`TOKEN值获取成功，请复制粘贴：${data.data.value}`);
+        alert(`TOKEN获取成功，支持模型为${data.data.type}，请复制粘贴：${data.data.key}`);
       } catch (error) {
         alert("获取TOKEN值失败，请重新登陆或联系管理员。");
         console.error("获取TOKEN值失败:", error);
