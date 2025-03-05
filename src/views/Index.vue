@@ -16,7 +16,7 @@
         </router-link>
         <router-link to="/wellcome" class="card">
           <h2>欢迎</h2>
-          <p>周年</p>
+          <p>周年计时</p>
         </router-link>
         <a :href="isLoggedIn ? 'http://shiyan520.cn:8080' : 'javascript:void(0)'" class="card"
            :class="{ disabled: !isLoggedIn }">
